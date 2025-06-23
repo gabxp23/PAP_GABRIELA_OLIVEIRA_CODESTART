@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <a href="ProjetoPAP.html" class="btn btn-secondary mb-3">← Voltar</a>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS - CodeStart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      padding-top: 70px;
+    }
+    .navbar-brand span {
+      color: #ff6600;
+    }
+    .language-card {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .language-card:hover {
+      transform: scale(1.03);
+    }
+    .nivel-card {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .nivel-card:hover {
+      transform: scale(1.02);
+    }
+  </style>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Code<span>Start</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+          <li class="nav-item"><a class="nav-link" href="#linguagens">Linguagens</a></li>
+          <li class="nav-item"><a class="nav-link" href="#chatbot">Chatbot</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4">CSS - Níveis de Aprendizagem</h1>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card nivel-card" onclick="mostrarNivel('nivel1')">
+          <div class="card-body">
+            <h5 class="card-title">Básico Nível 1</h5>
+            <p class="card-text">Conceitos iniciais e primeiros exemplos de código.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card nivel-card" onclick="mostrarNivel('nivel2')">
+          <div class="card-body">
+            <h5 class="card-title">Básico Nível 2</h5>
+            <p class="card-text">Sintaxe intermediária e lógica de programação.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card nivel-card" onclick="mostrarNivel('nivel3')">
+          <div class="card-body">
+            <h5 class="card-title">Básico Nível 3</h5>
+            <p class="card-text">Conceitos mais avançados e organização de código.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card nivel-card" onclick="mostrarNivel('nivel4')">
+          <div class="card-body">
+            <h5 class="card-title">Básico Nível 4</h5>
+            <p class="card-text">Conceitos iniciais e primeiros exemplos de código.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card nivel-card" onclick="mostrarNivel('nivel5')">
+          <div class="card-body">
+            <h5 class="card-title">Básico Nível 5</h5>
+            <p class="card-text">Sintaxe intermediária e lógica de programação.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card nivel-card" onclick="mostrarNivel('nivel6')">
+          <div class="card-body">
+            <h5 class="card-title">Básico Nível 6</h5>
+            <p class="card-text">Conceitos mais avançados e organização de código.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card nivel-card" onclick="mostrarNivel('nivel7')">
+          <div class="card-body">
+            <h5 class="card-title">Básico Nível 7</h5>
+            <p class="card-text">Conceitos iniciais e primeiros exemplos de código.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card nivel-card" onclick="mostrarNivel('nivel8')">
+          <div class="card-body">
+            <h5 class="card-title">Básico Nível 8</h5>
+            <p class="card-text">Sintaxe intermediária e lógica de programação.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card nivel-card" onclick="mostrarNivel('nivel9')">
+          <div class="card-body">
+            <h5 class="card-title">Básico Nível 9</h5>
+            <p class="card-text">Conceitos mais avançados e organização de código.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="conteudoNivel" class="mt-5"></div>
+  </div>
+
+  <script>
+    function mostrarNivel(nivel) {
+      const conteudo = {
+        nivel1: `<h2>Básico Nível 1</h2><pre><code>body {
+  background-color: #f0f0f0;
+  font-family: Arial;
+}</code></pre>`,
+        nivel2: `<h2>Básico Nível 2</h2><pre><code>.container {
+  display: flex;
+  justify-content: center;
+}</code></pre>`,
+        nivel3: `<h2>Básico Nível 3</h2><pre><code>@media (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}</code></pre>`,
+        nivel4: `<h2>Básico Nível 4</h2><pre><code>body {
+  background-color: #f0f0f0;
+  font-family: Arial;
+}</code></pre>`,
+        nivel5: `<h2>Básico Nível 5</h2><pre><code>body {
+  background-color: #f0f0f0;
+  font-family: Arial;
+}</code></pre>`,
+        nivel6: `<h2>Básico Nível 6</h2><pre><code>body {
+  background-color: #f0f0f0;
+  font-family: Arial;
+}</code></pre>`,
+        nivel7: `<h2>Básico Nível 7</h2><pre><code>body {
+  background-color: #f0f0f0;
+  font-family: Arial;
+}</code></pre>`,
+        nivel8: `<h2>Básico Nível 8</h2><pre><code>body {
+  background-color: #f0f0f0;
+  font-family: Arial;
+}</code></pre>`,
+        nivel9: `<h2>Básico Nível 9</h2><pre><code>body {
+  background-color: #f0f0f0;
+  font-family: Arial;
+}</code></pre>`
+      };
+      document.getElementById("conteudoNivel").innerHTML = conteudo[nivel];
+    }
+  </script>
+</body>
+</html>
