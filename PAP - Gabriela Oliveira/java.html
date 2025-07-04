@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Java - CodeStart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+ <style>
+    body {
+      padding-top: 70px;
+      background-color: #f8f9fa;
+    }
+    .navbar-brand span {
+      color: #ff6600;
+    }
+    .btn-secondary {
+      background-color: #ff6600;
+      border: none;
+    }
+    .nivel-card {
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      border-radius: 12px;
+      background-color: #ffe3c4;
+    }
+    .nivel-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .card-body {
+      background: #ff9c5a,;
+      border-radius: 12px;
+    }
+    #conteudoNivel {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      margin-bottom: 40px;
+    }
+    .nav-link.active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    #quizContainer {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      display: none;
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <a href="ProjetoPAP.html" class="btn btn-secondary position-absolute m-3">← Voltar</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Code<span>Start</span></a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+          <li class="nav-item"><a class="nav-link" href="#linguagens">Linguagens</a></li>
+          <li class="nav-item"><a class="nav-link" href="#chatbot">Chatbot</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container py-5">
+    <h1 class="mb-4 text-center">Java - Níveis de Aprendizagem</h1>
+    <div class="row g-4" id="nivelCards"></div>
+    <div id="conteudoNivel"></div>
+    <button id="btnQuiz" class="btn btn-secondary mb-4" style="display:none;">Abrir Quiz deste Nível</button>
+    <div id="quizContainer">
+      <h3>Quiz do Nível</h3>
+      <form id="quizForm"></form>
+      <button id="btnSubmitQuiz" class="btn btn-primary mt-3">Enviar Respostas</button>
+      <div id="quizResultado" class="mt-3"></div>
+      <button id="btnCloseQuiz" class="btn btn-secondary mt-3">Fechar Quiz</button>
+    </div>
+  </div>
+
+  <script>
+    const niveis = [
+      {id:'nivel1',titulo:'Básico Nível 1',desc:'Introdução ao Java.'},
+      {id:'nivel2',titulo:'Básico Nível 2',desc:'Variáveis e Operações.'},
+      {id:'nivel3',titulo:'Básico Nível 3',desc:'Condicionais.'},
+      {id:'nivel4',titulo:'Básico Nível 4',desc:'Ciclo while.'},
+      {id:'nivel5',titulo:'Básico Nível 5',desc:'for e Arrays.'},
+      {id:'nivel6',titulo:'Básico Nível 6',desc:'Métodos.'},
+      {id:'nivel7',titulo:'Básico Nível 7',desc:'Classes e Objetos.'},
+      {id:'nivel8',titulo:'Básico Nível 8',desc:'Arrays Multidimensionais.'},
+      {id:'nivel9',titulo:'Básico Nível 9',desc:'POO avançado.'}
+    ];
+
+    const conteudo = {
+      nivel1: `<h2>Java - Nível Básico 1: Introdução ao Java</h2>
+        <h5>📘 O que vais aprender:</h5><ul><li>O que é Java e onde é usado</li><li>Estrutura básica de um programa</li><li>System.out.println()</li></ul>
+        <h5>📚 Explicação:</h5><p>Java é orientada a objetos...</p>
+        <h5>💡 Exemplo:</h5><pre><code>public class OlaMundo {
+  public static void main(String[] args) {
+    System.out.println("Olá, mundo!");
+  }
+}</code></pre>
+        <h5>🎯 Mini Desafios:</h5><ul><li>🟢 Mensagem personalizada</li><li>🟡 Duas mensagens</li><li>🔴 Criar classe Apresentacao</li></ul>`,
+      nivel2: `<h2>Java - Nível Básico 2: Variáveis e Operações</h2>
+        <h5>📘 O que vais aprender:</h5><ul><li>Tipos: int, double, String</li><li>Operações matemáticas</li></ul>
+        <h5>📚 Explicação:</h5><p>...</p>
+        <h5>💡 Exemplo:</h5><pre><code>public class Calculo {
+  public static void main(String[] args) {
+    int a=5,b=3;
+    System.out.println("Resultado: "+(a+b));
+  }
+}</code></pre>
+        <h5>🎯 Mini Desafios:</h5><ul><li>🟢 Soma</li><li>🟡 Multiplicação</li><li>🔴 Texto e números</li></ul>`,
+      nivel3: `<h2>Java - Nível Básico 3: Condicionais</h2>
+        <h5>📘 O que vais aprender:</h5><ul><li>if, else if, else</li><li>Comparadores</li></ul>
+        <h5>💡 Exemplo:</h5><pre><code>int idade=17;
+if(idade>=18) System.out.println("Maior");
+else System.out.println("Menor");</code></pre>
+        <h5>🎯 Mini Desafios:</h5><ul><li>🟢 Par ou ímpar</li><li>🟡 Aprovação</li><li>🔴 Maior de três</li></ul>`,
+  nivel4: `<h2>Java - Nível Básico 4: Ciclo while</h2>
+    <h5>📘 O que vais aprender:</h5><ul><li>Repetição com <code>while</code></li><li>Condições de paragem</li></ul>
+    <h5>📚 Explicação:</h5><p>Usa-se <code>while</code> para repetir instruções até uma condição ser falsa.</p>
+    <h5>💡 Exemplo:</h5><pre><code>int i = 0;
+while (i < 5) {
+  System.out.println("Valor: " + i);
+  i++;
+}</code></pre>
+    <h5>🎯 Mini Desafios:</h5><ul><li>🟢 Contar até 10</li><li>🟡 Somar até 100</li><li>🔴 Tabuada com while</li></ul>`,
+
+  nivel5: `<h2>Java - Nível Básico 5: for e Arrays</h2>
+    <h5>📘 O que vais aprender:</h5><ul><li>Ciclo <code>for</code></li><li>Arrays</li></ul>
+    <h5>📚 Explicação:</h5><p><code>for</code> é útil para percorrer listas como arrays.</p>
+    <h5>💡 Exemplo:</h5><pre><code>int[] numeros = {10, 20, 30};
+for (int i = 0; i < numeros.length; i++) {
+  System.out.println(numeros[i]);
+}</code></pre>
+    <h5>🎯 Mini Desafios:</h5><ul><li>🟢 Preencher array</li><li>🟡 Média dos valores</li><li>🔴 Maior valor</li></ul>`,
+
+  nivel6: `<h2>Java - Nível Básico 6: Métodos</h2>
+    <h5>📘 O que vais aprender:</h5><ul><li>Criar métodos</li><li>Passar parâmetros e retornar valores</li></ul>
+    <h5>📚 Explicação:</h5><p>Métodos organizam o código em blocos reutilizáveis.</p>
+    <h5>💡 Exemplo:</h5><pre><code>public static int soma(int a, int b) {
+  return a + b;
+}</code></pre>
+    <h5>🎯 Mini Desafios:</h5><ul><li>🟢 Método de subtração</li><li>🟡 Verificar paridade</li><li>🔴 Contar vogais</li></ul>`,
+
+  nivel7: `<h2>Java - Nível Básico 7: Classes e Objetos</h2>
+    <h5>📘 O que vais aprender:</h5><ul><li>Definir classes</li><li>Criar objetos</li></ul>
+    <h5>📚 Explicação:</h5><p>Classes definem modelos e objetos são instâncias delas.</p>
+    <h5>💡 Exemplo:</h5><pre><code>class Pessoa {
+  String nome;
+  int idade;
+}
+
+Pessoa p = new Pessoa();
+p.nome = "Ana";
+p.idade = 20;</code></pre>
+    <h5>🎯 Mini Desafios:</h5><ul><li>🟢 Classe Aluno</li><li>🟡 Criar objeto Livro</li><li>🔴 Método apresentar()</li></ul>`,
+
+  nivel8: `<h2>Java - Nível Básico 8: Arrays Multidimensionais</h2>
+    <h5>📘 O que vais aprender:</h5><ul><li>Matrizes (arrays 2D)</li><li>Leitura e escrita em matrizes</li></ul>
+    <h5>📚 Explicação:</h5><p>Usa-se arrays multidimensionais para representar tabelas.</p>
+    <h5>💡 Exemplo:</h5><pre><code>int[][] matriz = {{1,2},{3,4}};
+for (int i=0; i&lt;2; i++) {
+  for (int j=0; j&lt;2; j++) {
+    System.out.println(matriz[i][j]);
+  }
+}</code></pre>
+    <h5>🎯 Mini Desafios:</h5><ul><li>🟢 Somar linhas</li><li>🟡 Buscar valor</li><li>🔴 Matriz identidade</li></ul>`,
+
+  nivel9: `<h2>Java - Nível Básico 9: POO Avançado</h2>
+    <h5>📘 O que vais aprender:</h5><ul><li>Herança</li><li>Polimorfismo</li><li>Encapsulamento</li></ul>
+    <h5>📚 Explicação:</h5><p>Programação Orientada a Objetos permite reutilizar e organizar melhor o código.</p>
+    <h5>💡 Exemplo:</h5><pre><code>class Animal {
+  void som() {
+    System.out.println("Som genérico");
+  }
+}
+class Gato extends Animal {
+  void som() {
+    System.out.println("Miau");
+  }
+}</code></pre>
+    <h5>🎯 Mini Desafios:</h5><ul><li>🟢 Classe Animal -> Cão</li><li>🟡 Classe Veículo -> Carro</li><li>🔴 Superclasse Pessoa -> subclasses</li></ul>`
+};
+
+    const quizzes = {
+      nivel1: [{ pergunta:"Qual comando para exibir algo?", opcoes:["echo","print","System.out.println"], correta:2 }],
+      nivel2: [{ pergunta:"Qual tipo guarda texto?", opcoes:["int","String","double"], correta:1 }],
+      nivel3: [{ pergunta:"Operador para igualdade?", opcoes:["=","==","equals"], correta:1 }],
+    };
+
+    const nivelCards = document.getElementById('nivelCards');
+    niveis.forEach(n => {
+      const col=document.createElement('div'); col.className="col-md-4";
+      col.innerHTML=`<div class="card nivel-card p-3" data-nivel="${n.id}">
+        <div class="card-body"><h5>${n.titulo}</h5><p>${n.desc}</p></div></div>`;
+      nivelCards.appendChild(col);
+    });
+
+    const conteudoDiv = document.getElementById('conteudoNivel'),
+          btnQuiz = document.getElementById('btnQuiz'),
+          quizContainer = document.getElementById('quizContainer'),
+          quizForm = document.getElementById('quizForm'),
+          btnSubmitQuiz = document.getElementById('btnSubmitQuiz'),
+          quizResultado = document.getElementById('quizResultado'),
+          btnCloseQuiz = document.getElementById('btnCloseQuiz');
+    let nivelAtual = null;
+
+    function mostrarNivel(nv) {
+      nivelAtual = nv;
+      conteudoDiv.innerHTML = conteudo[nv] || "<p>Conteúdo indisponível.</p>";
+      btnQuiz.style.display = quizzes[nv]? 'inline-block':'none';
+      quizContainer.style.display = 'none';
+      btnSubmitQuiz.disabled = false;
+    }
+
+    nivelCards.querySelectorAll('.nivel-card').forEach(c => c.onclick = () => { mostrarNivel(c.dataset.nivel); });
+
+    btnQuiz.onclick = () => {
+      if (!quizzes[nivelAtual]) return;
+      quizForm.innerHTML = quizzes[nivelAtual].map((q,i)=>`
+        <div class="mb-3"><p><strong>${i+1}. ${q.pergunta}</strong></p>
+        ${q.opcoes.map((o,j)=>`
+          <div class="form-check"><input name="q${i}" type="radio" id="q${i}o${j}" value="${j}" class="form-check-input">
+          <label for="q${i}o${j}">${o}</label></div>`).join('')}
+        </div>`).join('');
+      quizResultado.innerHTML='';
+      quizContainer.style.display = 'block';
+    };
+
+    btnSubmitQuiz.onclick = e => {
+      e.preventDefault();
+      const respostas = quizzes[nivelAtual].map((q,i)=> {
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        return sel? +sel.value : null;
+      });
+      if (respostas.includes(null)){ alert("Responde tudo."); return; }
+      let pontos = respostas.reduce((acc,r,i)=>(r===quizzes[nivelAtual][i].correta?acc+1:acc),0);
+      quizResultado.innerHTML = `<p>Acertaste ${pontos} de ${respostas.length}.</p>`;
+      btnSubmitQuiz.disabled = true;
+      const idx = niveis.findIndex(n=>n.id===nivelAtual);
+      if(pontos===respostas.length && idx < niveis.length-1){
+        const proximo = niveis[idx+1].id;
+        quizResultado.innerHTML += `<button class="btn btn-secondary mt-2" onclick="mostrarNivel('${proximo}')">Ir para o próximo nível</button>`;
+      }
+    };
+
+    btnCloseQuiz.onclick = () => quizContainer.style.display='none';
+
+    mostrarNivel('nivel1');
+  </script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Python - CodeStart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body {
+      padding-top: 70px;
+      background-color: #f8f9fa;
+    }
+    .navbar-brand span {
+      color: #ff6600;
+    }
+    .btn-secondary {
+      background-color: #ff6600;
+      border: none;
+    }
+    .nivel-card {
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      border-radius: 12px;
+      background-color: #ffe3c4;
+    }
+    .nivel-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .card-body {
+      background: #ff9c5a,;
+      border-radius: 12px;
+    }
+    #conteudoNivel {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      margin-bottom: 40px;
+    }
+    .nav-link.active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    #quizContainer {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      display: none;
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <a href="ProjetoPAP.html" class="btn btn-secondary position-absolute m-3">← Voltar</a>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Code<span>Start</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+          <li class="nav-item"><a class="nav-link" href="#linguagens">Linguagens</a></li>
+          <li class="nav-item"><a class="nav-link" href="#chatbot">Chatbot</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <h1 class="mb-4 text-center">Python - Níveis de Aprendizagem</h1>
+
+    <div class="row g-4" id="nivelCards"></div>
+
+    <div id="conteudoNivel" class="mt-5"></div>
+
+    <button id="btnQuiz" class="btn btn-secondary mb-4" style="display:none;">Abrir Quiz deste Nível</button>
+
+    <div id="quizContainer">
+      <h3>Quiz do Nível</h3>
+      <form id="quizForm"></form>
+      <button id="btnSubmitQuiz" class="btn btn-primary mt-3">Enviar Respostas</button>
+      <div id="quizResultado" class="mt-3"></div>
+      <button id="btnCloseQuiz" class="btn btn-secondary mt-3">Fechar Quiz</button>
+    </div>
+  </div>
+
+  <script>
+    const niveis = [
+      { id: 'nivel1', titulo: 'Básico Nível 1', desc: 'Primeiros passos com Python.' },
+      { id: 'nivel2', titulo: 'Básico Nível 2', desc: 'Operações e entrada de dados.' },
+      { id: 'nivel3', titulo: 'Básico Nível 3', desc: 'Condições com if, elif e else.' },
+      { id: 'nivel4', titulo: 'Básico Nível 4', desc: 'Repetições com while.' },
+      { id: 'nivel5', titulo: 'Básico Nível 5', desc: 'Repetições com for e listas.' },
+      { id: 'nivel6', titulo: 'Básico Nível 6', desc: 'Funções em Python.' },
+      { id: 'nivel7', titulo: 'Básico Nível 7', desc: 'Dicionários e tuplos.' },
+      { id: 'nivel8', titulo: 'Básico Nível 8', desc: 'Tratamento de erros.' },
+      { id: 'nivel9', titulo: 'Básico Nível 9', desc: 'Introdução à POO.' }
+    ];
+
+    const conteudo = {
+      nivel1: `<h2>Python - Nível Básico 1: Primeiros Passos com Python</h2>
+        <h5>📘 O que vais aprender:</h5>
+        <ul><li>O que é o Python e para que serve</li><li>Como escrever o teu primeiro programa</li><li>Como usar print() para mostrar mensagens</li><li>Como criar e usar variáveis</li></ul>
+        <h5>📚 Explicação Didática:</h5><p>Python é simples, poderoso e usado em diversas áreas. O print() exibe mensagens, e variáveis guardam informações.</p>
+        <h5>💡 Exemplo Explicado:</h5><pre><code>print("Olá, mundo!")
+nome = "Gabriela"
+idade = 17
+print("Meu nome é", nome)
+print("Tenho", idade, "anos")</code></pre>
+        <h5>🎯 Mini Desafios Nível 1</h5>
+        <ul>
+          <li>🟢 Desafio 1: print("Eu adoro programar em Python!")</li>
+          <li>🟡 Desafio 2: Cria variáveis com o teu nome, idade e cidade, e imprime.</li>
+          <li>🔴 Desafio 3: Mostra três mensagens diferentes usando print().</li>
+        </ul>`,
+      nivel2: `<h2>Python - Nível Básico 2: Operações e Entrada de Dados</h2>
+        <h5>📘 O que vais aprender:</h5>
+        <ul><li>Operadores matemáticos</li><li>Como receber dados com input()</li><li>Converter tipos de dados</li></ul>
+        <h5>📚 Explicação Didática:</h5><p>Aprenderás a pedir informações ao utilizador e realizar contas simples com elas.</p>
+        <h5>💡 Exemplo Explicado:</h5><pre><code>nome = input("Qual é o teu nome? ")
+idade = int(input("Quantos anos tens? "))
+print("Olá", nome, "daqui a 10 anos terás", idade + 10)</code></pre>
+        <h5>🎯 Mini Desafios Nível 2</h5>
+        <ul>
+          <li>🟢 Soma dois números fornecidos pelo utilizador.</li>
+          <li>🟡 Calcula a idade futura em 20 anos.</li>
+          <li>🔴 Recebe dois números e mostra o produto entre eles.</li>
+        </ul>`,
+      nivel3: `<h2>Python - Nível Básico 3: Condições com if, elif e else</h2>
+        <h5>📘 O que vais aprender:</h5>
+        <ul><li>Estruturas condicionais</li><li>Operadores de comparação</li><li>Tomada de decisão com if</li></ul>
+        <h5>📚 Explicação Didática:</h5><p>Permite que o teu código tome decisões com base em condições.</p>
+        <h5>💡 Exemplo Explicado:</h5><pre><code>idade = int(input("Quantos anos tens? "))
+if idade >= 18:
+  print("És maior de idade.")
+elif idade >= 13:
+  print("És adolescente.")
+else:
+  print("És criança.")</code></pre>
+        <h5>🎯 Mini Desafios Nível 3</h5>
+        <ul>
+          <li>🟢 Verifica se um número é positivo ou negativo.</li>
+          <li>🟡 Diz se a idade permite conduzir (>=18).</li>
+          <li>🔴 Verifica se um número é par ou ímpar.</li>
+        </ul>`,
+      nivel4: `<h2>Python - Nível Básico 4: Repetições com while</h2>
+        <h5>📘 O que vais aprender:</h5>
+        <ul><li>Loops com while</li><li>Condições de parada</li></ul>
+        <h5>📚 Explicação Didática:</h5><p>Permite repetir ações enquanto uma condição for verdadeira.</p>
+        <h5>💡 Exemplo Explicado:</h5><pre><code>contador = 1
+while contador <= 5:
+  print("Contagem:", contador)
+  contador += 1</code></pre>
+        <h5>🎯 Mini Desafios Nível 4</h5>
+        <ul>
+          <li>🟢 Conta de 1 a 10 com while.</li>
+          <li>🟡 Pede uma senha até estar correta.</li>
+          <li>🔴 Cria um menu que se repete até o utilizador digitar "sair".</li>
+        </ul>`,
+      nivel5: `<h2>Python - Nível Básico 5: Repetições com for e Listas</h2>
+        <h5>📘 O que vais aprender:</h5>
+        <ul><li>Loops com for</li><li>Trabalhar com listas</li></ul>
+        <h5>📚 Explicação Didática:</h5><p>Listas armazenam vários valores. O for permite percorrer listas facilmente.</p>
+        <h5>💡 Exemplo Explicado:</h5><pre><code>nomes = ["Ana", "Bruno", "Carlos"]
+for nome in nomes:
+  print("Olá", nome)</code></pre>
+        <h5>🎯 Mini Desafios Nível 5</h5>
+        <ul>
+          <li>🟢 Mostra cada item de uma lista.</li>
+          <li>🟡 Soma os números de uma lista.</li>
+          <li>🔴 Cria uma lista de notas e calcula a média.</li>
+        </ul>`,
+      nivel6: `<h2>Python - Nível Básico 6: Funções</h2>
+        <h5>📘 O que vais aprender:</h5>
+        <ul><li>O que são funções</li><li>Como criar e usar funções</li></ul>
+        <h5>📚 Explicação Didática:</h5><p>Funções são blocos reutilizáveis de código. Tornam o programa mais organizado.</p>
+        <h5>💡 Exemplo Explicado:</h5><pre><code>def saudacao(nome):
+  print("Olá", nome)
+saudacao("Gabriela")</code></pre>
+        <h5>🎯 Mini Desafios Nível 6</h5>
+        <ul>
+          <li>🟢 Cria uma função que soma dois números.</li>
+          <li>🟡 Cria uma função que retorna se um número é par.</li>
+          <li>🔴 Cria uma função que recebe nome e idade e imprime uma mensagem formatada.</li>
+        </ul>`,
+      nivel7: `<h2>Python - Nível Básico 7: Dicionários e Tuplos</h2>
+        <h5>📘 O que vais aprender:</h5>
+        <ul><li>Dicionários (dict)</li><li>Tuplos (tuple)</li></ul>
+        <h5>📚 Explicação Didática:</h5><p>Dicionários guardam pares chave-valor. Tuplos são listas imutáveis.</p>
+        <h5>💡 Exemplo Explicado:</h5><pre><code>pessoa = {"nome": "João", "idade": 30}
+tuplo = ("banana", "maçã")
+print(pessoa["nome"])
+print(tuplo[1])</code></pre>
+        <h5>🎯 Mini Desafios Nível 7</h5>
+        <ul>
+          <li>🟢 Cria um dicionário com teus dados.</li>
+          <li>🟡 Acede aos valores de um dicionário.</li>
+          <li>🔴 Percorre um tuplo com for.</li>
+        </ul>`,
+      nivel8: `<h2>Python - Nível Básico 8: Tratamento de Erros</h2>
+        <h5>📘 O que vais aprender:</h5>
+        <ul><li>Try e Except</li><li>Evitar que o programa trave com erros</li></ul>
+        <h5>📚 Explicação Didática:</h5><p>Com try/except consegues lidar com erros de forma elegante.</p>
+        <h5>💡 Exemplo Explicado:</h5><pre><code>try:
+  num = int(input("Digite um número: "))
+  print("Dobro:", num * 2)
+except ValueError:
+  print("Erro: não foi digitado um número válido.")</code></pre>
+        <h5>🎯 Mini Desafios Nível 8</h5>
+        <ul>
+          <li>🟢 Trata erro de conversão de string para int.</li>
+          <li>🟡 Usa try/except ao dividir dois números.</li>
+          <li>🔴 Mostra mensagem amigável em caso de erro.</li>
+        </ul>`,
+      nivel9: `<h2>Python - Nível Básico 9: Introdução à Programação Orientada a Objetos (POO)</h2>
+        <h5>📘 O que vais aprender:</h5>
+        <ul><li>O que são classes e objetos</li><li>Como criar uma classe</li><li>Métodos e atributos</li></ul>
+        <h5>📚 Explicação Didática:</h5><p>POO permite modelar entidades do mundo real como objetos no código.</p>
+        <h5>💡 Exemplo Explicado:</h5><pre><code>class Pessoa:
+  def __init__(self, nome, idade):
+    self.nome = nome
+    self.idade = idade
+  def apresentar(self):
+    print(f"Olá, meu nome é {self.nome} e tenho {self.idade} anos.")
+
+p1 = Pessoa("Gabriela", 17)
+p1.apresentar()</code></pre>
+        <h5>🎯 Mini Desafios Nível 9</h5>
+        <ul>
+          <li>🟢 Cria uma classe Carro com atributos marca e ano.</li>
+          <li>🟡 Cria método para mostrar detalhes do carro.</li>
+          <li>🔴 Cria objetos diferentes e chama métodos.</li>
+        </ul>`
+    };
+
+    const quizzes = {
+      nivel1: [
+        {
+          pergunta: "Qual a função usada para imprimir algo na tela?",
+          opcoes: ["input()", "print()", "output()"],
+          correta: 1
+        },
+        {
+          pergunta: "Como se cria uma variável em Python?",
+          opcoes: ["variavel = 10", "10 = variavel", "var:10"],
+          correta: 0
+        }
+      ],
+      nivel2: [
+        {
+          pergunta: "Qual função lê dados do usuário?",
+          opcoes: ["print()", "input()", "read()"],
+          correta: 1
+        },
+        {
+          pergunta: "Como convertemos uma string em inteiro?",
+          opcoes: ["int()", "str()", "float()"],
+          correta: 0
+        }
+      ],
+    };
+
+    const nivelCards = document.getElementById('nivelCards');
+    niveis.forEach(nivel => {
+      const card = document.createElement('div');
+      card.className = "col-md-4";
+      card.innerHTML = `
+        <div class="card nivel-card p-3" data-nivel="${nivel.id}">
+          <div class="card-body">
+            <h5 class="card-title">${nivel.titulo}</h5>
+            <p class="card-text">${nivel.desc}</p>
+          </div>
+        </div>
+      `;
+      nivelCards.appendChild(card);
+    });
+
+    const conteudoDiv = document.getElementById('conteudoNivel');
+    const btnQuiz = document.getElementById('btnQuiz');
+    const quizContainer = document.getElementById('quizContainer');
+    const quizForm = document.getElementById('quizForm');
+    const btnSubmitQuiz = document.getElementById('btnSubmitQuiz');
+    const quizResultado = document.getElementById('quizResultado');
+    const btnCloseQuiz = document.getElementById('btnCloseQuiz');
+
+    let nivelAtual = null;
+
+    function mostrarConteudo(nivelId) {
+      nivelAtual = nivelId;
+      conteudoDiv.innerHTML = conteudo[nivelId] || "<p>Conteúdo indisponível.</p>";
+      quizResultado.innerHTML = "";
+      quizForm.innerHTML = "";
+      quizContainer.style.display = "none";
+
+      if(quizzes[nivelId]) {
+        btnQuiz.style.display = "inline-block";
+      } else {
+        btnQuiz.style.display = "none";
+      }
+    }
+    btnQuiz.addEventListener('click', () => {
+      if (!nivelAtual || !quizzes[nivelAtual]) return;
+
+      quizForm.innerHTML = "";
+      quizResultado.innerHTML = "";
+      quizzes[nivelAtual].forEach((q, i) => {
+        const div = document.createElement('div');
+        div.className = "mb-3";
+        div.innerHTML = `<p><strong>${i + 1}. ${q.pergunta}</strong></p>`;
+        q.opcoes.forEach((op, idx) => {
+          div.innerHTML += `
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q${i}" id="q${i}o${idx}" value="${idx}" />
+              <label class="form-check-label" for="q${i}o${idx}">${op}</label>
+            </div>
+          `;
+        });
+        quizForm.appendChild(div);
+      });
+      quizContainer.style.display = "block";
+      window.scrollTo({ top: quizContainer.offsetTop - 50, behavior: 'smooth' });
+    });
+
+    btnSubmitQuiz.addEventListener('click', (e) => {
+      e.preventDefault();
+      const respostas = new Array(quizzes[nivelAtual].length).fill(null);
+      let allAnswered = true;
+
+      quizzes[nivelAtual].forEach((q, i) => {
+        const radios = document.getElementsByName(`q${i}`);
+        let answered = false;
+        radios.forEach(r => {
+          if(r.checked) {
+            respostas[i] = Number(r.value);
+            answered = true;
+          }
+        });
+        if(!answered) allAnswered = false;
+      });
+
+      if(!allAnswered) {
+        alert("Por favor, responda todas as perguntas.");
+        return;
+      }
+      let pontos = 0;
+      respostas.forEach((r, i) => {
+        if(r === quizzes[nivelAtual][i].correta) pontos++;
+      });
+      quizResultado.innerHTML = `<p>Você acertou ${pontos} de ${quizzes[nivelAtual].length} perguntas.</p>`;
+      quizzes[nivelAtual].forEach((q, i) => {
+        const acertou = respostas[i] === q.correta;
+        quizResultado.innerHTML += `<p><strong>${i + 1}. ${q.pergunta}</strong><br>
+          Sua resposta: <em>${q.opcoes[respostas[i]]}</em><br>
+          Resposta correta: <em>${q.opcoes[q.correta]}</em><br>
+          <span style="color:${acertou ? 'green' : 'red'};">${acertou ? 'Correto!' : 'Errado.'}</span></p>`;
+      });
+
+      btnSubmitQuiz.disabled = true;
+    });
+    btnCloseQuiz.addEventListener('click', () => {
+      quizContainer.style.display = "none";
+      btnSubmitQuiz.disabled = false;
+      quizForm.innerHTML = "";
+      quizResultado.innerHTML = "";
+    });
+    nivelCards.querySelectorAll('.nivel-card').forEach(card => {
+      card.addEventListener('click', () => {
+        mostrarConteudo(card.getAttribute('data-nivel'));
+        window.scrollTo({ top: conteudoDiv.offsetTop - 70, behavior: 'smooth' });
+      });
+    });
+    mostrarConteudo(niveis[0].id);
+  </script>
+</body>
+</html>
